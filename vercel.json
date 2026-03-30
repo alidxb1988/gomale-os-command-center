@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "gomale-os-command-center",
+  "builds": [
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/frontend-preview.html" },
+    { "src": "/dashboard", "dest": "/frontend-preview.html" },
+    { "src": "/trading", "dest": "/trading-deck.html" },
+    { "src": "/chat", "dest": "/ai-chat.html" },
+    { "src": "/backtest", "dest": "/backtest.html" },
+    { "src": "/agents", "dest": "/agents.html" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOMALE OS - Trading Deck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0a0e1a; }
+        .glass { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); }
+        .gradient-text { background: linear-gradient(135deg, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+        .card-hover:hover { border-color: rgba(59, 130, 246, 0.5); box-shadow: 0 0 20px rgba(59, 130, 246, 0.15); }
+        .order-btn { transition: all 0.2s; }
+        .order-btn:hover { transform: translateY(-2px); }
+        .tradingview-container { height: 600px; }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <!-- Header -->
+    <header class="glass border-b border-blue-500/20 sticky top-0 z-50">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1E3A5F] to-[#3b82f6] flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold">GOMALE OS</h1>
+                        <p class="text-blue-400 text-xs">AI Trading Command Center</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500/10 border border-green-500/20">
+                        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <span class="text-green-400 text-sm">TestNet Connected</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="text-right">
+                            <div class="text-white font-semibold">$12,456.78</div>
+                            <div class="text-green-400 text-xs">+$245.67 Today</div>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                            <span class="text-white font-bold">A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-[#111827]/50 border-b border-white/5 px-6">
+        <div class="flex gap-1">
+            <a href="frontend-preview.html" class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                Dashboard
+            </a>
+            <button class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-blue-400 border-b-2 border-blue-400 bg-blue-500/10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                Trading Deck
+            </button>
+            <button class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                AI Chat
+            </button>
+            <button class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Backtest
+            </button>
+            <button class="flex items-center gap-2 px-6 py-4 text-sm font-medium text-gray-400 border-b-2 border-transparent hover:text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                Agents
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="p-6 max-w-[1920px] mx-auto">
+        <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
+            <!-- Chart Area (3 columns) -->
+            <div class="xl:col-span-3 space-y-6">
+                <!-- Chart Header -->
+                <div class="flex items-center justify-between bg-[#1a1f2e] rounded-xl border border-white/10 p-4">
+                    <div class="flex items-center gap-6">
+                        <div>
+                            <span class="text-gray-400 text-xs">Symbol</span>
+                            <div class="flex items-center gap-2">
+                                <select class="bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white font-semibold">
+                                    <option>BTCUSDT</option>
+                                    <option>ETHUSDT</option>
+                                    <option>SOLUSDT</option>
+                                    <option>XRPUSDT</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 text-xs">Last Price</span>
+                            <div class="text-2xl font-bold text-white">$67,234.50</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 text-xs">24h Change</span>
+                            <div class="text-green-400 font-semibold">+2.34%</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 text-xs">24h High</span>
+                            <div class="text-white">$68,120.00</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 text-xs">24h Low</span>
+                            <div class="text-white">$65,890.50</div>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 text-xs">24h Volume</span>
+                            <div class="text-white">24.5K BTC</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="px-3 py-1 rounded bg-white/10 text-white text-xs hover:bg-white/20">1m</button>
+                        <button class="px-3 py-1 rounded bg-white/10 text-white text-xs hover:bg-white/20">5m</button>
+                        <button class="px-3 py-1 rounded bg-blue-500 text-white text-xs">15m</button>
+                        <button class="px-3 py-1 rounded bg-white/10 text-white text-xs hover:bg-white/20">1h</button>
+                        <button class="px-3 py-1 rounded bg-white/10 text-white text-xs hover:bg-white/20">4h</button>
+                        <button class="px-3 py-1 rounded bg-white/10 text-white text-xs hover:bg-white/20">1d</button>
+                    </div>
+                </div>
+
+                <!-- TradingView Chart -->
+                <div class="bg-[#1a1f2e] rounded-2xl border border-white/10 overflow-hidden">
+                    <div class="tradingview-container" id="tradingview_chart"></div>
+                </div>
+
+                <!-- Order Book & Recent Trades -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Order Book -->
+                    <div class="bg-[#1a1f2e] rounded-2xl border border-white/10 p-4">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Order Book
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2 text-xs text-gray-500 mb-2 px-2">
+                            <div>Price (USDT)</div>
+                            <div class="text-right">Amount (BTC)</div>
+                            <div class="text-right">Total</div>
+                        </div>
+                        <div class="space-y-1 max-h-[300px] overflow-y-auto">
+                            <!-- Asks (Sell) -->
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-red-400">67,245.50</div>
+                                <div class="text-right text-white">0.523</div>
+                                <div class="text-right text-gray-400">35,166</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1 bg-red-500/5">
+                                <div class="text-red-400">67,240.00</div>
+                                <div class="text-right text-white">1.234</div>
+                                <div class="text-right text-gray-400">82,974</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-red-400">67,235.80</div>
+                                <div class="text-right text-white">0.856</div>
+                                <div class="text-right text-gray-400">57,554</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1 bg-red-500/5">
+                                <div class="text-red-400">67,230.20</div>
+                                <div class="text-right text-white">2.145</div>
+                                <div class="text-right text-gray-400">144,209</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-red-400">67,225.00</div>
+                                <div class="text-right text-white">0.342</div>
+                                <div class="text-right text-gray-400">22,991</div>
+                            </div>
+                            <!-- Spread -->
+                            <div class="py-2 text-center text-gray-500 text-sm border-y border-white/10 my-2">
+                                Spread: 9.50 (0.01%)
+                            </div>
+                            <!-- Bids (Buy) -->
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1 bg-green-500/5">
+                                <div class="text-green-400">67,215.50</div>
+                                <div class="text-right text-white">0.678</div>
+                                <div class="text-right text-gray-400">45,572</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-green-400">67,210.00</div>
+                                <div class="text-right text-white">1.567</div>
+                                <div class="text-right text-gray-400">105,218</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1 bg-green-500/5">
+                                <div class="text-green-400">67,205.30</div>
+                                <div class="text-right text-white">0.923</div>
+                                <div class="text-right text-gray-400">62,030</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-green-400">67,200.80</div>
+                                <div class="text-right text-white">2.456</div>
+                                <div class="text-right text-gray-400">165,085</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1 bg-green-500/5">
+                                <div class="text-green-400">67,195.00</div>
+                                <div class="text-right text-white">0.789</div>
+                                <div class="text-right text-gray-400">53,017</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Market Trades -->
+                    <div class="bg-[#1a1f2e] rounded-2xl border border-white/10 p-4">
+                        <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Recent Trades
+                        </h3>
+                        <div class="grid grid-cols-3 gap-2 text-xs text-gray-500 mb-2 px-2">
+                            <div>Price</div>
+                            <div class="text-right">Amount</div>
+                            <div class="text-right">Time</div>
+                        </div>
+                        <div class="space-y-1 max-h-[300px] overflow-y-auto">
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-green-400">67,215.50</div>
+                                <div class="text-right text-white">0.125</div>
+                                <div class="text-right text-gray-500">10:23:45</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-red-400">67,220.00</div>
+                                <div class="text-right text-white">0.342</div>
+                                <div class="text-right text-gray-500">10:23:41</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-green-400">67,218.50</div>
+                                <div class="text-right text-white">0.089</div>
+                                <div class="text-right text-gray-500">10:23:38</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-red-400">67,219.20</div>
+                                <div class="text-right text-white">0.567</div>
+                                <div class="text-right text-gray-500">10:23:35</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-green-400">67,216.80</div>
+                                <div class="text-right text-white">0.234</div>
+                                <div class="text-right text-gray-500">10:23:32</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-red-400">67,218.00</div>
+                                <div class="text-right text-white">0.445</div>
+                                <div class="text-right text-gray-500">10:23:28</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-green-400">67,215.00</div>
+                                <div class="text-right text-white">0.123</div>
+                                <div class="text-right text-gray-500">10:23:25</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs px-2 py-1">
+                                <div class="text-red-400">67,217.50</div>
+                                <div class="text-right text-white">0.678</div>
+                                <div class="text-right text-gray-500">10:23:22</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Panel -->
+            <div class="bg-[#1a1f2e] rounded-2xl border border-white/10 p-6">
+                <h3 class="text-white font-bold mb-6 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    Place Order
+                </h3>
+                
+                <!-- Buy/Sell Toggle -->
+                <div class="grid grid-cols-2 gap-2 mb-6">
+                    <button class="py-3 rounded-xl font-bold text-lg bg-green-500 hover:bg-green-600 transition-all order-btn">
+                        BUY
+                    </button>
+                    <button class="py-3 rounded-xl font-bold text-lg bg-red-500 hover:bg-red-600 transition-all order-btn">
+                        SELL
+                    </button>
+                </div>
+
+                <!-- Order Type -->
+                <div class="mb-6">
+                    <label class="text-gray-400 text-sm mb-2 block">Order Type</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="py-2 rounded-lg bg-blue-500 text-white text-sm font-medium">Market</button>
+                        <button class="py-2 rounded-lg bg-white/5 text-gray-400 text-sm font-medium hover:bg-white/10">Limit</button>
+                        <button class="py-2 rounded-lg bg-white/5 text-gray-400 text-sm font-medium hover:bg-white/10">Stop</button>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-6">
+                    <label class="text-gray-400 text-sm mb-2 block">Price (USDT)</label>
+                    <input
+                        type="text"
+                        value="67,234.50"
+                        readonly
+                        class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white font-mono"
+                    />
+                    <p class="text-gray-500 text-xs mt-1">≈ $67,234.50</p>
+                </div>
+
+                <!-- Quantity -->
+                <div class="mb-6">
+                    <label class="text-gray-400 text-sm mb-2 block">Quantity (BTC)</label>
+                    <input
+                        type="number"
+                        value="0.15"
+                        step="0.001"
+                        class="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white font-mono"
+                    />
+                    <div class="flex gap-2 mt-2">
+                        <button class="px-3 py-1 rounded bg-white/5 text-xs text-gray-400 hover:bg-white/10">25%</button>
+                        <button class="px-3 py-1 rounded bg-white/5 text-xs text-gray-400 hover:bg-white/10">50%</button>
+                        <button class="px-3 py-1 rounded bg-white/5 text-xs text-gray-400 hover:bg-white/10">75%</button>
+                        <button class="px-3 py-1 rounded bg-white/5 text-xs text-gray-400 hover:bg-white/10">100%</button>
+                    </div>
+                </div>
+
+                <!-- Total -->
+                <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/10">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 text-sm">Total</span>
+                        <span class="text-white font-bold text-lg">$10,085.18</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-gray-500 text-xs">Available</span>
+                        <span class="text-gray-400 text-xs">$12,456.78 USDT</span>
+                    </div>
+                </div>
+
+                <!-- TP/SL Toggle -->
+                <div class="mb-6">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" class="w-4 h-4 rounded border-gray-600" />
+                        <span class="text-gray-400 text-sm">Take Profit / Stop Loss</span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button class="w-full py-4 rounded-xl font-bold text-lg bg-green-500 hover:bg-green-600 transition-all order-btn">
+                    Buy BTC
+                </button>
+
+                <!-- Position Preview -->
+                <div class="mt-6 p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                    <h4 class="text-blue-400 font-semibold text-sm mb-3">Position Preview</h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Est. Entry Price</span>
+                            <span class="text-white">$67,234.50</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Est. Liquidation</span>
+                            <span class="text-white">$50,425.88</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Margin Required</span>
+                            <span class="text-white">$2,017.04</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Leverage</span>
+                            <span class="text-white">5x</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        new TradingView.widget({
+            "width": "100%",
+            "height": 600,
+            "symbol": "BINANCE:BTCUSDT",
+            "interval": "15",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#1a1f2e",
+            "enable_publishing": false,
+            "hide_top_toolbar": false,
+            "hide_legend": false,
+            "save_image": false,
+            "container_id": "tradingview_chart"
+        });
+    </script>
+</body>
+</html>

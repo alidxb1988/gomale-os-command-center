@@ -1,0 +1,28 @@
+# GOMALE OS Command Center - Backend Requirements
+# Core Framework
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+python-dotenv==1.0.1
+pydantic==2.9.2
+
+# Trading
+pybit==5.7.0
+
+# AI/ML
+anthropic==0.40.0
+google-generativeai==0.8.3
+httpx==0.27.2
+
+# Data Analysis
+pandas==2.2.3
+numpy==2.1.3
+
+# Database
+# SQLite is built-in, no additional package needed
+
+# Utilities
+websockets==13.1
+python-dateutil==2.9.0
+
+# Optional but recommended
+# redis==5.2.0  # For caching (optional)
