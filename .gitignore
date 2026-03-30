@@ -1,21 +1,32 @@
-.vercel
-.env.gomale
-.env.master
-node_modules/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-.DS_Store
-*.log
+# Backend venv
+backend/venv/
+backend/__pycache__/
+backend/**/*.pyc
+backend/*.db
+backend/*.log
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/dist/
+
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Deployment
+DEPLOYMENT.md
+DEPLOY_SETUP.md
+SUMMARY.md
+*.zip
+
+# Secrets (should not be committed)
+.env
+.env.*
