@@ -1,0 +1,41 @@
+Retrieving project…
+Deploying leos-projects-df4b8412/frontend
+Inspect: https://vercel.com/leos-projects-df4b8412/frontend/Favg8pVXV5jH9tJrRjvvBa7cHqGo [1s]
+Production: https://frontend-79mv3zmta-leos-projects-df4b8412.vercel.app [1s]
+https://frontend-79mv3zmta-leos-projects-df4b8412.vercel.appBuilding...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Previous build caches not available.
+Building: Downloading 19 deployment files...
+Building: Running "vercel build"
+Building: Vercel CLI 50.37.1
+Building: WARNING! Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings
+Building: Installing dependencies...
+Building: npm warn deprecated next@14.1.0: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/security-update-2025-12-11 for more details.
+Building: added 169 packages in 8s
+Building: 29 packages are looking for funding
+Building: run `npm fund` for details
+Building: Detected Next.js version: 14.1.0
+Building: Running "npm run build"
+Building: > gomale-os-command-center@2.0.0 build
+Building: > next build
+Building: Attention: Next.js now collects completely anonymous telemetry regarding usage.
+Building: This information is used to shape Next.js' roadmap and prioritize features.
+Building: You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+Building: https://nextjs.org/telemetry
+Building: ▲ Next.js 14.1.0
+Building: Linting and checking validity of types ...
+Building: Failed to compile.
+Building: ./pages/ai-chat.tsx:14:17
+Building: Type error: Module '"@/lib/api"' has no exported member 'ttsApi'.
+Building: 12 |   MessageSquare
+Building: 13 | } from 'lucide-react';
+Building: > 14 | import { aiApi, ttsApi } from '@/lib/api';
+Building: |                 ^
+Building: 15 | import toast from 'react-hot-toast';
+Building: 16 |
+Building: 17 | interface Message {
+Building: Error: Command "npm run build" exited with 1
+Error: Command "npm run build" exited with 1

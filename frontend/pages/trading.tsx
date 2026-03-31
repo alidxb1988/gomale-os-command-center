@@ -163,10 +163,10 @@ export default function TradingPage() {
       if (result.data?.success) {
         toast.success(`Paper trade executed! Order ID: ${result.data.order_id}`);
         if (result.data.stop_loss) {
-          toast.info(`Stop Loss: $${formatPrice(result.data.stop_loss)}`);
+          toast.success(`Stop Loss: $${formatPrice(result.data.stop_loss)}`);
         }
         if (result.data.take_profit) {
-          toast.info(`Take Profit: $${formatPrice(result.data.take_profit)}`);
+          toast.success(`Take Profit: $${formatPrice(result.data.take_profit)}`);
         }
       } else {
         toast.error(result.data?.error || 'Paper trade failed');
@@ -191,7 +191,7 @@ export default function TradingPage() {
         } else if (pnl < 0) {
           toast.error(`Position closed with loss: -$${formatPrice(Math.abs(pnl))}`);
         } else {
-          toast.info('Position closed at breakeven');
+          toast.success('Position closed at breakeven');
         }
         fetchData();
       }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback, ReactNode } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   LayoutDashboard, 
   TrendingUp, 
@@ -9,29 +10,41 @@ import {
   Menu,
   X,
   Activity,
-  Zap
+  Zap,
+  Sparkles,
+  Globe
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-const navItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/trading', label: 'Trading Deck', icon: TrendingUp },
-  { href: '/ai-chat', label: 'AI Chat', icon: MessageSquare },
-  { href: '/analytics', label: 'Analytics', icon: Activity },
-  { href: '/settings', label: 'Settings', icon: Settings },
-];
-
 export default function Layout({ children }: LayoutProps) {
+  const { t, i18n } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const [wsStatus, setWsStatus] = useState<'connecting' | 'connected' | 'disconnected'>('disconnected');
+  const [isRTL, setIsRTL] = useState(false);
+
+  // Check for RTL languages
+  useEffect(() => {
+    setIsRTL(i18n.language === 'ar');
+    document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+  }, [i18n.language]);
+
+  const navItems = [
+    { href: '/', label: t('nav.dashboard'), icon: LayoutDashboard },
+    { href: '/trading', label: t('nav.trading'), icon: TrendingUp },
+    { href: '/ai-hub', label: 'AI Hub', icon: Sparkles },
+    { href: '/ai-chat', label: t('nav.aiChat'), icon: MessageSquare },
+    { href: '/analytics', label: t('nav.analytics'), icon: Activity },
+    { href: '/settings', label: t('nav.settings'), icon: Settings },
+  ];
 
   // WebSocket connection
   useEffect(() => {
@@ -59,12 +72,13 @@ export default function Layout({ children }: LayoutProps) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gomale-darker flex">
+    <div className={`min-h-screen bg-gomale-darker flex ${isRTL ? 'flex-row-reverse' : ''}`}>
       {/* Sidebar */}
       <aside 
         className={clsx(
-          'fixed lg:static inset-y-0 left-0 z-50 w-64 bg-gomale-navy border-r border-gray-800 transition-transform duration-300',
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0 lg:w-20'
+          'fixed lg:static inset-y-0 z-50 w-64 bg-gomale-navy border-r border-gray-800 transition-transform duration-300',
+          isRTL ? 'right-0 border-l border-r-0' : 'left-0',
+          sidebarOpen ? 'translate-x-0' : `${isRTL ? 'translate-x-full' : '-translate-x-full'} lg:translate-x-0 lg:w-20`
         )}
       >
         {/* Logo */}
@@ -77,7 +91,7 @@ export default function Layout({ children }: LayoutProps) {
               'font-bold text-lg text-white transition-opacity',
               sidebarOpen ? 'opacity-100' : 'opacity-0 lg:hidden'
             )}>
-              GOMALE OS
+              {t('app.name')}
             </span>
           </div>
         </div>
@@ -113,8 +127,8 @@ export default function Layout({ children }: LayoutProps) {
         
         {/* WebSocket Status */}
         <div className={clsx(
-          'absolute bottom-4 left-4 right-4 p-3 rounded-lg bg-gomale-dark border border-gray-800',
-          sidebarOpen ? 'block' : 'hidden lg:hidden'
+          'absolute bottom-4 p-3 rounded-lg bg-gomale-dark border border-gray-800',
+          sidebarOpen ? 'block left-4 right-4' : 'hidden lg:hidden'
         )}>
           <div className="flex items-center gap-2">
             <div className={clsx(
@@ -148,6 +162,7 @@ export default function Layout({ children }: LayoutProps) {
           </div>
           
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             <span className="text-sm text-gray-400">TestNet</span>
             <div className="w-2 h-2 rounded-full bg-yellow-500" />
           </div>

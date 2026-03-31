@@ -1,0 +1,26 @@
+Loading scopes…
+Searching for existing projects…
+Linked to leos-projects-df4b8412/gomale-os-command-center (created .vercel and added it to .gitignore)
+The `name` property in vercel.json is deprecated (https://vercel.link/name-prop)
+Deploying leos-projects-df4b8412/gomale-os-command-center
+Uploading [--------------------] (0.0B/4KB)
+Uploading [====================] (4.0KB/4KB)
+Inspect: https://vercel.com/leos-projects-df4b8412/gomale-os-command-center/5d7gqHAgvXCR1zVvy5gkWd8mf9Ey [2s]
+Production: https://gomale-os-command-center-7eol4zs8k-leos-projects-df4b8412.vercel.app [2s]
+https://gomale-os-command-center-7eol4zs8k-leos-projects-df4b8412.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Previous build caches not available.
+Building: Downloading 25 deployment files...
+Building: Running "vercel build"
+Building: Vercel CLI 50.37.1
+Building: WARNING! Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings
+Building: Build Completed in /vercel/output [21ms]
+Building: Deploying outputs...
+Building: Deployment completed
+[2K[1A[2K[GProduction: https://gomale-os-command-center-7eol4zs8k-leos-projects-df4b8412.vercel.app [8s]
+Completing...
+Aliased: https://gomale-os-command-center.vercel.app [8s]
+Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings

@@ -460,6 +460,143 @@ async def ai_chat_safe(request: ChatRequest):
         return {"error": str(e)}
 
 # ============================================================================
+# AI ORCHESTRATION ENDPOINTS
+# ============================================================================
+
+class OrchestrateRequest(BaseModel):
+    message: str
+    preferred_model: Optional[str] = None
+
+class OrchestrateResponse(BaseModel):
+    model: str
+    model_name: str
+    task_type: str
+    confidence: float
+    content: str
+    sources: Optional[List[Dict[str, str]]] = None
+
+@app.post("/api/orchestrate", response_model=OrchestrateResponse)
+async def orchestrate_ai(request: OrchestrateRequest):
+    """
+    Intelligent AI orchestration endpoint.
+    Analyzes the user query and routes to the best AI model based on task type.
+    """
+    try:
+        message = request.message.lower()
+        
+        # Task detection keywords
+        task_keywords = {
+            "code": ["code", "program", "function", "api", "bug", "error", "debug", "python", "javascript", "typescript", "react", "nextjs", "css", "html", "sql"],
+            "search": ["search", "find", "lookup", "what is", "who is", "where", "when", "latest", "news", "current", "today"],
+            "image": ["image", "picture", "photo", "generate image", "create image", "draw", "illustration"],
+            "analysis": ["analyze", "analysis", "compare", "evaluate", "assessment", "review", "study"],
+            "translation": ["translate", "translation", "in french", "in spanish", "in chinese", "in arabic", "in japanese"],
+            "trading": ["trading", "crypto", "bitcoin", "btc", "eth", "sol", "price", "chart", "technical analysis", "signal"],
+        }
+        
+        # Detect task type
+        detected_task = "general"
+        max_score = 0
+        
+        for task, keywords in task_keywords.items():
+            score = sum(1 for kw in keywords if kw in message)
+            if score > max_score:
+                max_score = score
+                detected_task = task
+        
+        # Model selection logic
+        task_models = {
+            "code": ("claude", "Claude 3.5 Sonnet"),
+            "search": ("perplexity", "Perplexity"),
+            "image": ("dalle", "DALL-E 3"),
+            "analysis": ("claude", "Claude 3 Opus"),
+            "translation": ("kimi", "Kimi"),
+            "trading": ("claude", "Claude 3 Opus"),
+            "general": ("claude", "Claude 3.5 Sonnet"),
+        }
+        
+        selected_model, model_name = task_models.get(detected_task, task_models["general"])
+        
+        # Use preferred model if specified and valid
+        if request.preferred_model and request.preferred_model in ["claude", "gemini", "perplexity", "kimi"]:
+            selected_model = request.preferred_model
+            model_mapping = {
+                "claude": "Claude 3.5 Sonnet",
+                "gemini": "Gemini Pro",
+                "perplexity": "Perplexity",
+                "kimi": "Kimi"
+            }
+            model_name = model_mapping.get(selected_model, model_name)
+        
+        # Calculate confidence
+        confidence = min(max_score / 3, 1.0) if max_score > 0 else 0.5
+        
+        # Get AI response
+        chat_request = ChatRequest(message=request.message, model=selected_model)
+        ai_response = await ai_chat(chat_request)
+        
+        # Extract sources for Perplexity
+        sources = None
+        if selected_model == "perplexity" and "citations" in str(ai_response):
+            sources = [{"title": "Source", "url": "#"}]  # Simplified
+        
+        return OrchestrateResponse(
+            model=selected_model,
+            model_name=model_name,
+            task_type=detected_task,
+            confidence=confidence,
+            content=ai_response.get("content", ""),
+            sources=sources
+        )
+        
+    except Exception as e:
+        logger.error(f"Orchestration error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/models")
+async def list_available_models():
+    """List all available AI models and their capabilities"""
+    models = [
+        {
+            "id": "claude-3-5-sonnet",
+            "name": "Claude 3.5 Sonnet",
+            "provider": "Anthropic",
+            "capabilities": ["code", "analysis", "writing", "math", "reasoning"],
+            "enabled": ANTHROPIC_AVAILABLE and anthropic_client is not None
+        },
+        {
+            "id": "claude-3-opus",
+            "name": "Claude 3 Opus",
+            "provider": "Anthropic",
+            "capabilities": ["code", "analysis", "writing", "complex-tasks"],
+            "enabled": ANTHROPIC_AVAILABLE and anthropic_client is not None
+        },
+        {
+            "id": "gemini-pro",
+            "name": "Gemini Pro",
+            "provider": "Google",
+            "capabilities": ["code", "analysis", "multimodal"],
+            "enabled": GEMINI_AVAILABLE
+        },
+        {
+            "id": "perplexity",
+            "name": "Perplexity",
+            "provider": "Perplexity",
+            "capabilities": ["search", "research", "facts"],
+            "enabled": PERPLEXITY_API_KEY is not None
+        },
+        {
+            "id": "kimi",
+            "name": "Kimi",
+            "provider": "Moonshot",
+            "capabilities": ["code", "translation", "long-context"],
+            "enabled": KIMI_API_KEY is not None
+        }
+    ]
+    
+    return {"models": models}
+
+# ============================================================================
 # TTS ENDPOINTS
 # ============================================================================
 

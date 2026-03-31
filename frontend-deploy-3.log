@@ -1,0 +1,62 @@
+Retrieving project…
+Deploying leos-projects-df4b8412/frontend
+Uploading [--------------------] (0.0B/3KB)
+Uploading [====================] (3.0KB/3KB)
+Inspect: https://vercel.com/leos-projects-df4b8412/frontend/7ZRG1mCwe3MRU4FAcWvk3LchEMmR [2s]
+Production: https://frontend-3ms2dw16r-leos-projects-df4b8412.vercel.app [2s]
+https://frontend-3ms2dw16r-leos-projects-df4b8412.vercel.appBuilding...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Previous build caches not available.
+Building: Downloading 19 deployment files...
+Building: Running "vercel build"
+Building: Vercel CLI 50.37.1
+Building: WARNING! Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings
+Building: Installing dependencies...
+Building: npm warn deprecated next@14.1.0: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/security-update-2025-12-11 for more details.
+Building: added 169 packages in 8s
+Building: 29 packages are looking for funding
+Building: run `npm fund` for details
+Building: Detected Next.js version: 14.1.0
+Building: Running "npm run build"
+Building: > gomale-os-command-center@2.0.0 build
+Building: > next build
+Building: Attention: Next.js now collects completely anonymous telemetry regarding usage.
+Building: This information is used to shape Next.js' roadmap and prioritize features.
+Building: You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+Building: https://nextjs.org/telemetry
+Building: ▲ Next.js 14.1.0
+Building: Linting and checking validity of types ...
+Building: Creating an optimized production build ...
+Building: ✓ Compiled successfully
+Building: Collecting page data ...
+Building: Generating static pages (0/7) ...
+Building: Generating static pages (1/7)
+Building: Generating static pages (3/7)
+Building: Generating static pages (5/7)
+Building: ✓ Generating static pages (7/7)
+Building: Finalizing page optimization ...
+Building: Collecting build traces ...
+Building: Route (pages)                              Size     First Load JS
+Building: ┌ ○ /                                      3.12 kB        92.9 kB
+Building: ├   /_app                                  0 B            89.8 kB
+Building: ├ ○ /404                                   181 B            90 kB
+Building: ├ ○ /ai-chat                               3.73 kB        93.6 kB
+Building: ├ ○ /analytics                             2.78 kB        92.6 kB
+Building: ├ ○ /settings                              2.1 kB         91.9 kB
+Building: └ ○ /trading                               3.52 kB        93.3 kB
+Building: + First Load JS shared by all              95.1 kB
+Building: ├ chunks/framework-03cd576e71e4cd66.js   45.2 kB
+Building: ├ chunks/main-930135e47dff83e9.js        31.8 kB
+Building: ├ chunks/pages/_app-58f0efb9da789ce5.js  12.1 kB
+Building: └ other shared chunks (total)            6.06 kB
+Building: ○  (Static)  prerendered as static content
+Building: Collected static files (public/, static/, .next/static): 2.497ms
+Building: Build Completed in /vercel/output [26s]
+Building: Deploying outputs...
+[2K[1A[2K[GProduction: https://frontend-3ms2dw16r-leos-projects-df4b8412.vercel.app [34s]
+Completing...
+Aliased: https://frontend-dusky-three-35.vercel.app [34s]
+Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings
